@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import { useForm, usePage } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import InputError from "@/Components/InputError";
 import Dropdown from "./Dropdown";
 import { PageProps } from "@/types";
 import { FormEventHandler } from "react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 export default function Chirp({ chirp }: any) {
     const { auth } = usePage<PageProps>().props;

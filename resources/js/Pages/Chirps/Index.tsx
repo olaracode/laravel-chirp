@@ -3,10 +3,13 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import InputError from "@/Components/InputError";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useForm, Head } from "@inertiajs/react";
-import { PageProps } from "@/types";
+import { PageProps, IChirp } from "@/types";
 import { FormEventHandler } from "react";
+// import Chirp from "@/Components/Chirpr";
+import CoreLayout from "@/Layouts/CoreLayout";
 import Chirp from "@/Components/Chirp";
-const Index = ({ auth, chirps }: PageProps & { chirps: any[] }) => {
+
+const Index = ({ auth, chirps }: PageProps & { chirps: IChirp[] }) => {
     const { data, setData, post, processing, reset, errors } = useForm({
         message: "",
     });
@@ -16,28 +19,15 @@ const Index = ({ auth, chirps }: PageProps & { chirps: any[] }) => {
         post(route("chirps.store"), { onSuccess: () => reset() });
     };
     return (
-        <AuthenticatedLayout user={auth.user}>
-            <Head title="Chirps" />
-            <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-                <form onSubmit={submit}>
-                    <textarea
-                        value={data.message}
-                        placeholder="What's on your mind?"
-                        className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        onChange={(e) => setData("message", e.target.value)}
-                    ></textarea>
-                    <InputError message={errors.message} className="mt-2" />
-                    <PrimaryButton className="mt-4" disabled={processing}>
-                        Chirp
-                    </PrimaryButton>
-                </form>
-                <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
-                    {chirps.map((chirp) => (
-                        <Chirp key={chirp.id} chirp={chirp} />
-                    ))}
-                </div>
-            </div>
-        </AuthenticatedLayout>
+        <CoreLayout>
+            <Head title="Feed" />
+            <Chirp.Feed>
+                <Chirp.New />
+                {chirps.map((chirp) => (
+                    <Chirp.Post key={chirp.id} {...chirp} />
+                ))}
+            </Chirp.Feed>
+        </CoreLayout>
     );
 };
 
