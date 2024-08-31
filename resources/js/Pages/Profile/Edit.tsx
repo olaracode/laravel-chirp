@@ -11,7 +11,7 @@ export default function Edit({
     status,
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (
-        <CoreLayout>
+        <CoreLayout title="Profile">
             <Head title="Profile" />
 
             <div className="py-12">

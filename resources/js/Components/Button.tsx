@@ -1,18 +1,15 @@
 import React, { PropsWithChildren, ButtonHTMLAttributes } from "react";
-
+import { twMerge } from "tailwind-merge";
+export const btn =
+    "flex items-center space-x-4 py-2 px-4 hover:bg-gray-200 rounded-full";
 const BaseButton = ({
     children,
     className = "",
     ...props
-}: PropsWithChildren & ButtonHTMLAttributes<HTMLButtonElement>) => {
+}: PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>) => {
+    const cBtn = twMerge(btn, className);
     return (
-        <button
-            className={
-                "flex items-center space-x-4 p-2 hover:bg-gray-200 rounded-full" +
-                ` ${className}`
-            }
-            {...props}
-        >
+        <button className={cBtn} {...props}>
             {children}
         </button>
     );

@@ -8,7 +8,6 @@ import { FormEventHandler } from "react";
 // import Chirp from "@/Components/Chirpr";
 import CoreLayout from "@/Layouts/CoreLayout";
 import Chirp from "@/Components/Chirp";
-
 const Index = ({ auth, chirps }: PageProps & { chirps: IChirp[] }) => {
     const { data, setData, post, processing, reset, errors } = useForm({
         message: "",
@@ -21,12 +20,10 @@ const Index = ({ auth, chirps }: PageProps & { chirps: IChirp[] }) => {
     return (
         <CoreLayout>
             <Head title="Feed" />
-            <Chirp.Feed>
-                <Chirp.New />
-                {chirps.map((chirp) => (
-                    <Chirp.Post key={chirp.id} {...chirp} />
-                ))}
-            </Chirp.Feed>
+            <Chirp.New />
+            {chirps.map((chirp) => (
+                <Chirp.Post key={chirp.id} {...chirp} />
+            ))}
         </CoreLayout>
     );
 };
