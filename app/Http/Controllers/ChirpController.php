@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chirp;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,6 +18,8 @@ class ChirpController extends Controller
     {
         return Inertia::render('Chirps/Index', [
                 'chirps' => Chirp::with('user:id,name')->latest()->get(),
+                'followers' => auth()->user()->followers,
+                'following' => auth()->user()->following,
         ]);
     }
 
@@ -81,6 +84,9 @@ class ChirpController extends Controller
         Gate::authorize('delete', $chirp);
 
         $chirp->delete();
-        return redirect(route('chirps.index'));
+        return redirect(route('chirps.index'))->with([
+            'status' => 'error',
+            'message' => 'Chirp deleted successfully.'
+        ]);
     }
 }

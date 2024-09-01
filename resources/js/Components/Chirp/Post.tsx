@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { IChirp } from "@/types";
-import dayjs from "dayjs";
-import Dropdown from "../Dropdown";
-import relativeTime from "dayjs/plugin/relativeTime";
-import { EllipsisVertical } from "lucide-react";
-import Modal from "../Modal";
+import Preview from "./Preview";
+
 import { usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import Edit from "./Edit";
-dayjs.extend(relativeTime);
+
 const Chirp = ({
     user,
     message,
@@ -23,20 +20,13 @@ const Chirp = ({
         <>
             <div className="p-4 border-b border-gray-200">
                 <div className="flex space-x-2 justify-between">
+                    <Preview
+                        owner={currentUser.id === user_id}
+                        name={user.name}
+                        created_at={created_at}
+                        id={user_id}
+                    />
                     <div className="flex items-center gap-1">
-                        <p className="font-bold">{user.name}</p>
-                        {created_at != updated_at && (
-                            <span className="text-gray-400 text-xs font-light">
-                                (edited)
-                            </span>
-                        )}
-                    </div>
-                    <div className="flex items-center gap-1">
-                        <div className="text-gray-500">
-                            <span className="text-sm font-bold">
-                                {dayjs(created_at).fromNow()}
-                            </span>
-                        </div>
                         <Edit
                             id={id}
                             message={message}
@@ -44,7 +34,7 @@ const Chirp = ({
                         />
                     </div>
                 </div>
-                <p className="mt-1">{message}</p>
+                <p className="mt-3">{message}</p>
             </div>
         </>
     );
